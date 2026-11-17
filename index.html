@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Handmade Catalogue</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf5f1;--card:#fff;--ink:#4a3a3d;--mute:#8a7478;--rose:#e59aa6;--rose2:#f7d6dc;--sage:#a9c4ae;--sage2:#e3eee5;--peach:#fbe3d3;--line:#f0dfe0;--sh:0 8px 24px rgba(200,140,150,.16);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241d20;--card:#2f262a;--ink:#f4e8ea;--mute:#b9a3a8;--rose:#e59aa6;--rose2:#4a3036;--sage:#8fb097;--sage2:#2b3a2f;--peach:#43322c;--line:#42343a;--sh:0 8px 24px rgba(0,0,0,.35);color-scheme:dark}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--ink);background-color:var(--bg);line-height:1.55;min-height:100vh;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23e59aa6' opacity='.16'%3E%3Cg transform='translate(50 55)'%3E%3Cellipse rx='7' ry='15' cy='-14'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(288)'/%3E%3C/g%3E%3Cg transform='translate(160 150) scale(.7)'%3E%3Cellipse rx='7' ry='15' cy='-14'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(288)'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23a9c4ae' opacity='.28'%3E%3Cellipse cx='150' cy='40' rx='5' ry='11' transform='rotate(40 150 40)'/%3E%3Cellipse cx='168' cy='52' rx='5' ry='11' transform='rotate(-20 168 52)'/%3E%3Cellipse cx='40' cy='170' rx='5' ry='11' transform='rotate(30 40 170)'/%3E%3C/g%3E%3C/svg%3E")}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px 90px}
+header{text-align:center;padding:38px 0 18px}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;margin:0;font-weight:700}
+h1{font-size:clamp(2rem,7vw,3rem);line-height:1.1}
+.tag{color:var(--mute);margin:8px 0 0}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px;margin:10px auto 22px;max-width:360px;box-shadow:var(--sh)}
+.tabs button{flex:1;border:0;background:none;color:var(--mute);font:600 .95rem Quicksand,sans-serif;padding:10px 8px;border-radius:99px;cursor:pointer;transition:background .35s,color .35s}
+.tabs button.on{background:var(--rose);color:#fff}
+#app{animation:in .5s ease both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.art{border:0;text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--sh);transition:transform .35s,box-shadow .35s}
+.art:hover{transform:translateY(-4px) rotate(-.6deg)}
+.art .ic{font-size:2.1rem;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--rose2);margin-bottom:10px;transition:transform .5s}
+.art:hover .ic{transform:rotate(18deg) scale(1.08)}
+.art:nth-child(3n+2) .ic{background:var(--sage2)}.art:nth-child(3n) .ic{background:var(--peach)}
+.art h3{font-size:1.3rem}.art p{margin:4px 0 0;font-size:.82rem;color:var(--mute)}
+.hello{text-align:center;color:var(--mute);margin:0 0 18px}
+.back{border:0;background:none;color:var(--rose);font:600 .95rem Quicksand,sans-serif;cursor:pointer;padding:6px 0;margin-bottom:6px}
+.intro{background:var(--card);border-radius:20px;padding:16px 18px;box-shadow:var(--sh);margin-bottom:16px}
+.intro p{margin:6px 0 0;color:var(--mute);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 .88rem Quicksand,sans-serif;padding:8px 14px;border-radius:99px;cursor:pointer;transition:all .3s}
+.chip.on{background:var(--rose);border-color:var(--rose);color:#fff;transform:scale(1.04)}
+.lbl{font-weight:600;margin:14px 0 0}
+.card{background:var(--card);border-radius:20px;overflow:hidden;box-shadow:var(--sh);cursor:pointer;border:0;padding:0;text-align:left;font:inherit;color:inherit;animation:in .5s ease both;animation-delay:calc(var(--i)*55ms);transition:transform .3s}
+.card:hover{transform:translateY(-4px)}
+.ph{aspect-ratio:1;display:grid;place-items:center;font-size:3rem;background:linear-gradient(135deg,var(--rose2),var(--peach))}
+.card:nth-child(even) .ph{background:linear-gradient(135deg,var(--sage2),var(--rose2))}
+.ph img{width:100%;height:100%;object-fit:cover}
+.card .b{padding:11px 13px 14px}
+.card h4{margin:0;font-size:.95rem;font-weight:600}
+.card .pr{color:var(--rose);font-weight:600;margin-top:2px}
+.card small{color:var(--mute)}
+.empty{text-align:center;color:var(--mute);padding:34px 10px;grid-column:1/-1}
+.cta{display:inline-block;background:var(--sage);color:#1f3325;text-decoration:none;font:600 1rem Quicksand,sans-serif;padding:13px 22px;border-radius:99px;border:0;cursor:pointer;transition:transform .3s}
+.cta:hover{transform:scale(1.04)}
+.cta.alt{background:var(--rose2);color:var(--ink)}
+.sheet-bg{position:fixed;inset:0;background:rgba(60,30,40,.4);backdrop-filter:blur(3px);z-index:20;opacity:0;pointer-events:none;transition:opacity .35s;display:flex;align-items:flex-end;justify-content:center}
+.sheet-bg.open{opacity:1;pointer-events:auto}
+.sheet{background:var(--card);width:100%;max-width:520px;border-radius:28px 28px 0 0;padding:22px 22px calc(26px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);max-height:90vh;overflow:auto}
+.open .sheet{transform:none}
+.sheet .ph{border-radius:18px;margin-bottom:14px;max-height:260px;aspect-ratio:auto;height:220px}
+.sheet h2{font-size:1.7rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.meta span{background:var(--sage2);border-radius:99px;padding:3px 11px;font-size:.8rem}
+.sheet .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+footer{text-align:center;color:var(--mute);font-size:.85rem;margin-top:40px}
+footer a{color:var(--rose)}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body><div class="wrap">
+<header><h1 id="brand"></h1><p class="tag" id="tag"></p></header>
+<nav class="tabs" id="tabs"></nav>
+<main id="app"></main>
+<footer id="foot"></footer>
+</div>
+<div class="sheet-bg" id="bg"><div class="sheet" id="sheet"></div></div>
+<script>
+/* ============ EDIT THIS SECTION ONLY ============ */
+const BRAND = "Eshita's Artistry";
+const TAGLINE = "Handmade with love, made just for you";
+const WHATSAPP = "919999999999";           // country code + number, no + or spaces
+const INSTAGRAM = "eshita.s_artistry";            // without @
+
+/* To add a new category: add one line here, then add products with art:"<id>" */
+const ARTS = [
+ {id:"lippan",  name:"Lippan Art", icon:"🪞", blurb:"A Kutchi mud and mirror craft, shaped by hand and set with tiny mirrors. Each nameplate takes days to finish."},
+ {id:"quilling", name:"Quilling",   icon:"🌸", blurb:"Thin paper strips rolled, shaped and glued into delicate flowers and patterns."},
+ {id:"crochet",  name:"Crochet",    icon:"🧶", blurb:"Soft yarn hooked stitch by stitch into flowers, keychains and keepsakes."},
+ {id:"resin",    name:"Resin Art",  icon:"💎", blurb:"Clear glass-like resin that preserves flowers and holds colour, glitter and memories."},
+ {id:"clay",     name:"Clay Art",   icon:"🧁", blurb:"Tiny characters and charms sculpted from clay and painted by hand."},
+ {id:"gypsum",   name:"Gypsum Art", icon:"🏺", blurb:"Cast and hand-painted gypsum pieces for home decor."}
+];
+const WHO = ["Wife / Girlfriend","Husband / Boyfriend","Parents","Siblings","Friend","Colleague","Kids","Couples","Myself"];
+const OCC = ["Birthday","Anniversary","Wedding","Housewarming","Festival","Valentine's","Just because","Return gift"];
+const BUDGET = [["Under ₹200",0,200],["₹200 – ₹500",200,500],["₹500 – ₹1000",500,1000],["Above ₹1000",1000,1e9]];
+
+/* PRODUCTS (sample data, replace with yours). img: "images/name.jpg" or leave "" for a placeholder.
+   w = who it's for, o = occasions, c = customisable, best = show in Surprise me */
+const P = [
+ {n:"Couple Name Plate", art:"lippan", t:"Nameplates", p:1800, size:"12 × 8 in", w:["Couples","Wife / Girlfriend"], o:["Wedding","Housewarming","Anniversary"], c:1, stock:"Made to order", best:1},
+ {n:"Single Name Plate", art:"lippan", t:"Nameplates", p:950, size:"10 × 5 in", w:["Parents","Myself"], o:["Housewarming"], c:1, stock:"Made to order"},
+ {n:"Ek Onkar", art:"lippan", t:"Religious", p:650, size:"6 × 6 in", w:["Parents","Friend"], o:["Housewarming","Festival"], stock:"Ready stock"},
+ {n:"Radha Krishna", art:"lippan", t:"Religious", p:1200, size:"10 × 10 in", w:["Parents","Couples"], o:["Housewarming","Wedding","Festival"], stock:"Ready stock", best:1},
+ {n:"Shubh Labh Set", art:"lippan", t:"Festive", p:450, size:"8 in", w:["Parents","Friend"], o:["Festival","Housewarming"], stock:"Ready stock"},
+ {n:"Quilling Jhumke", art:"quilling", t:"Earrings", p:250, size:"Big", w:["Wife / Girlfriend","Siblings","Friend"], o:["Birthday","Festival","Anniversary"], c:1, stock:"Made to order", best:1},
+ {n:"Quilling Studs", art:"quilling", t:"Earrings", p:120, size:"Small", w:["Friend","Siblings","Myself"], o:["Birthday","Just because"], stock:"Ready stock"},
+ {n:"Quilling Card & Envelope", art:"quilling", t:"Cards", p:150, size:"A6", w:["Wife / Girlfriend","Husband / Boyfriend","Friend"], o:["Birthday","Anniversary","Valentine's"], c:1, stock:"Ready stock"},
+ {n:"Crochet Flower Bouquet", art:"crochet", t:"Bouquets", p:600, size:"7 flowers", w:["Wife / Girlfriend","Parents"], o:["Birthday","Anniversary","Valentine's"], c:1, stock:"Made to order", best:1},
+ {n:"Crochet Keychain", art:"crochet", t:"Keychains", p:120, size:"3 in", w:["Friend","Colleague","Kids"], o:["Just because","Return gift","Birthday"], stock:"Ready stock"},
+ {n:"Crochet Bookmark", art:"crochet", t:"Bookmarks", p:80, size:"5 in", w:["Friend","Colleague"], o:["Return gift","Just because"], stock:"Ready stock"},
+ {n:"Resin Pendant", art:"resin", t:"Pendants", p:350, size:"Medium", w:["Wife / Girlfriend","Siblings","Friend"], o:["Birthday","Anniversary","Valentine's"], c:1, stock:"Made to order", best:1},
+ {n:"Preserved Rose", art:"resin", t:"Rose preservation", p:1500, size:"Frame", w:["Wife / Girlfriend","Husband / Boyfriend","Couples"], o:["Anniversary","Wedding","Valentine's"], c:1, stock:"Made to order"},
+ {n:"Resin Coaster Set", art:"resin", t:"Coasters", p:700, size:"Set of 2", w:["Parents","Couples","Friend"], o:["Housewarming","Wedding"], stock:"Ready stock"},
+ {n:"Clay Keychain", art:"clay", t:"Keychains", p:100, size:"2 in", w:["Husband / Boyfriend","Friend","Kids","Colleague"], o:["Just because","Birthday","Return gift"], c:1, stock:"Ready stock"}
+];
+/* ============ END EDIT SECTION ============ */
+
+const $ = s => document.querySelector(s), app = $("#app");
+const artOf = id => ARTS.find(a => a.id === id) || {icon:"✿", name:""};
+const rupee = n => "₹" + n.toLocaleString("en-IN");
+let S = {v:"home", art:null, type:"All", w:null, o:null, b:null};
+
+function waLink(p){ return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi! I’m interested in: " + p.n + " (" + rupee(p.p) + ")")}`; }
+function ph(p){ return `<div class="ph">${p.img ? `<img src="${p.img}" alt="${p.n}" loading="lazy">` : artOf(p.art).icon}</div>`; }
+function cards(list){
+  if(!list.length) return `<div class="empty">Nothing here yet. Message us and we’ll make it for you.</div>`;
+  return list.map((p,i) => `<button class="card" style="--i:${i}" data-p="${P.indexOf(p)}">${ph(p)}<div class="b"><h4>${p.n}</h4><div class="pr">${rupee(p.p)}</div><small>${p.c ? "Customisable" : p.stock}</small></div></button>`).join("");
+}
+function chips(arr, key){ return `<div class="chips">` + arr.map(x => { const v = Array.isArray(x) ? x[0] : x; return `<button class="chip ${S[key]===v?"on":""}" data-k="${key}" data-v="${v}">${v}</button>`; }).join("") + `</div>`; }
+
+function go(v, extra){ S = {...S, v, ...extra}; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function render(){
+  $("#tabs").innerHTML = [["home","Browse"],["gift","Gift Finder"]].map(([k,l]) => `<button class="${(S.v==="gift")===(k==="gift")?"on":""}" data-tab="${k}">${l}</button>`).join("");
+  app.style.animation = "none"; void app.offsetWidth; app.style.animation = "";
+  if(S.v === "home"){
+    app.innerHTML = `<p class="hello">Pick an art form to explore</p><div class="grid">` +
+      ARTS.map(a => `<button class="art" data-art="${a.id}"><div class="ic">${a.icon}</div><h3>${a.name}</h3><p>${P.filter(p=>p.art===a.id).length} designs</p></button>`).join("") + `</div>`;
+  } else if(S.v === "art"){
+    const a = artOf(S.art), items = P.filter(p => p.art === S.art), types = [...new Set(items.map(p => p.t))];
+    const shown = S.type === "All" ? items : items.filter(p => p.t === S.type);
+    app.innerHTML = `<button class="back" data-tab="home">‹ All art forms</button><div class="intro"><h2>${a.icon} ${a.name}</h2><p>${a.blurb}</p></div>
+      <div class="chips">` + ["All",...types].map(t => `<button class="chip ${S.type===t?"on":""}" data-type="${t}">${t}</button>`).join("") + `</div><div class="grid" id="res">${cards(shown)}</div>`;
+  } else {
+    app.innerHTML = `<div class="intro"><h2>Find the perfect gift</h2><p>Choose who it’s for, the occasion and your budget. Pick any or all.</p></div>
+      <div class="lbl">Who is it for?</div>${chips(WHO,"w")}<div class="lbl">What’s the occasion?</div>${chips(OCC,"o")}<div class="lbl">Budget</div>${chips(BUDGET,"b")}
+      <div class="row" style="margin:6px 0 16px"><button class="cta alt" id="surp">Surprise me</button></div><div class="grid" id="res"></div>`;
+    gift();
+  }
+}
+function gift(surprise){
+  let list = P.filter(p => (!S.w || p.w.includes(S.w)) && (!S.o || p.o.includes(S.o)) && (!S.b || BUDGET.some(([l,lo,hi]) => l===S.b && p.p>=lo && p.p<hi)));
+  if(surprise) list = P.filter(p => p.best).sort(() => Math.random()-.5).slice(0,4);
+  $("#res").innerHTML = cards(list);
+}
+function open(p){
+  $("#sheet").innerHTML = `${ph(p)}<h2>${p.n}</h2><div class="pr" style="color:var(--rose);font-weight:600;font-size:1.25rem">${rupee(p.p)}</div>
+    <div class="meta"><span>${artOf(p.art).name}</span><span>${p.size}</span><span>${p.stock}</span>${p.c?"<span>Customisable</span>":""}</div>
+    <p style="color:var(--mute);margin:6px 0 0">Perfect for: ${p.w.join(", ")}.</p>
+    <div class="row"><a class="cta" href="${waLink(p)}" target="_blank" rel="noopener">${p.c ? "Order or customise on WhatsApp" : "Order on WhatsApp"}</a><button class="cta alt" id="close">Close</button></div>`;
+  $("#bg").classList.add("open");
+}
+const close = () => $("#bg").classList.remove("open");
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-tab],[data-art],[data-type],[data-k],[data-p],#surp,#close"); if(e.target.id==="bg") return close(); if(!t) return;
+  if(t.dataset.tab) go(t.dataset.tab, {type:"All"});
+  else if(t.dataset.art) go("art", {art:t.dataset.art, type:"All"});
+  else if(t.dataset.type){ S.type = t.dataset.type; render(); }
+  else if(t.dataset.k){ const {k,v} = t.dataset; S[k] = S[k]===v ? null : v; t.parentElement.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", S[k]===c.dataset.v)); gift(); }
+  else if(t.dataset.p) open(P[+t.dataset.p]);
+  else if(t.id === "surp"){ S.w = S.o = S.b = null; document.querySelectorAll(".chip.on").forEach(c => c.classList.remove("on")); gift(true); }
+  else if(t.id === "close") close();
+});
+document.addEventListener("keydown", e => e.key === "Escape" && close());
+
+$("#brand").textContent = BRAND; $("#tag").textContent = TAGLINE; document.title = BRAND;
+$("#foot").innerHTML = `Follow us <a href="https://instagram.com/${INSTAGRAM}" target="_blank" rel="noopener">@${INSTAGRAM}</a> · <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">Chat on WhatsApp</a>`;
+render();
+</script></body></html>
