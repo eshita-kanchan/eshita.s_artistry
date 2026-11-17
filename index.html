@@ -2,16 +2,17 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Handmade Catalogue</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")||"light"}catch(e){document.documentElement.dataset.theme="light"}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fdf5f1;--card:#fff;--ink:#4a3a3d;--mute:#8a7478;--rose:#e59aa6;--rose2:#f7d6dc;--sage:#a9c4ae;--sage2:#e3eee5;--peach:#fbe3d3;--line:#f0dfe0;--sh:0 8px 24px rgba(200,140,150,.16);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241d20;--card:#2f262a;--ink:#f4e8ea;--mute:#b9a3a8;--rose:#e59aa6;--rose2:#4a3036;--sage:#8fb097;--sage2:#2b3a2f;--peach:#43322c;--line:#42343a;--sh:0 8px 24px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#241d20;--card:#2f262a;--ink:#f4e8ea;--mute:#b9a3a8;--rose:#e59aa6;--rose2:#4a3036;--sage:#8fb097;--sage2:#2b3a2f;--peach:#43322c;--line:#42343a;--sh:0 8px 24px rgba(0,0,0,.35);color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
 body{font-family:Quicksand,system-ui,sans-serif;color:var(--ink);background-color:var(--bg);line-height:1.55;min-height:100vh;
 background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23e59aa6' opacity='.16'%3E%3Cg transform='translate(50 55)'%3E%3Cellipse rx='7' ry='15' cy='-14'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(288)'/%3E%3C/g%3E%3Cg transform='translate(160 150) scale(.7)'%3E%3Cellipse rx='7' ry='15' cy='-14'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(72)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(144)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(216)'/%3E%3Cellipse rx='7' ry='15' cy='-14' transform='rotate(288)'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23a9c4ae' opacity='.28'%3E%3Cellipse cx='150' cy='40' rx='5' ry='11' transform='rotate(40 150 40)'/%3E%3Cellipse cx='168' cy='52' rx='5' ry='11' transform='rotate(-20 168 52)'/%3E%3Cellipse cx='40' cy='170' rx='5' ry='11' transform='rotate(30 40 170)'/%3E%3C/g%3E%3C/svg%3E")}
 .wrap{max-width:980px;margin:0 auto;padding:0 18px 90px}
-header{text-align:center;padding:38px 0 18px}
+header{text-align:center;padding:38px 0 18px;position:relative}#theme{position:absolute;top:14px;right:0;width:42px;height:42px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:1.15rem;cursor:pointer;box-shadow:var(--sh)}
 h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;margin:0;font-weight:700}
 h1{font-size:clamp(2rem,7vw,3rem);line-height:1.1}
 .tag{color:var(--mute);margin:8px 0 0}
@@ -63,7 +64,7 @@ footer a{color:var(--rose)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head>
 <body><div class="wrap">
-<header><h1 id="brand"></h1><p class="tag" id="tag"></p></header>
+<header><button id="theme" aria-label="Switch between light and dark mode"></button><h1 id="brand"></h1><p class="tag" id="tag"></p></header>
 <nav class="tabs" id="tabs"></nav>
 <main id="app"></main>
 <footer id="foot"></footer>
@@ -71,10 +72,10 @@ footer a{color:var(--rose)}
 <div class="sheet-bg" id="bg"><div class="sheet" id="sheet"></div></div>
 <script>
 /* ============ EDIT THIS SECTION ONLY ============ */
-const BRAND = "Eshita's Artistry";
+const BRAND = "Your Brand Name";
 const TAGLINE = "Handmade with love, made just for you";
 const WHATSAPP = "919999999999";           // country code + number, no + or spaces
-const INSTAGRAM = "eshita.s_artistry";            // without @
+const INSTAGRAM = "yourhandle";            // without @
 
 /* To add a new category: add one line here, then add products with art:"<id>" */
 const ARTS = [
@@ -168,6 +169,8 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => e.key === "Escape" && close());
 
+const tb=$("#theme"), paint=()=>tb.textContent=document.documentElement.dataset.theme==="dark"?"☀️":"🌙";
+paint(); tb.onclick=()=>{const n=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}paint()};
 $("#brand").textContent = BRAND; $("#tag").textContent = TAGLINE; document.title = BRAND;
 $("#foot").innerHTML = `Follow us <a href="https://instagram.com/${INSTAGRAM}" target="_blank" rel="noopener">@${INSTAGRAM}</a> · <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">Chat on WhatsApp</a>`;
 render();
